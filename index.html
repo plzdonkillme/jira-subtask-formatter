@@ -1,0 +1,173 @@
+<html>
+<head>
+	<style>
+		.action-button {
+		 	background-color: grey;
+			border: 2px solid grey;
+			color: white;
+			padding: 15px 32px;
+			margin: 10px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			border-radius: 8px;
+			transition-duration: 0.2s;
+		}
+
+		.action-button:hover {
+			border: 2px solid grey;
+			color: black;
+			background-color: white;
+			cursor: pointer;
+		}
+
+		.subtask {
+			margin: 5px;
+		}
+
+		.subtask-title {
+			font-size: 16px;
+			border: 1px solid black;
+			width: 350px;
+		}
+
+		.subtask-assignee {
+			font-size: 16px;
+			background-color: white;
+			border-color: black;
+			margin-left: 5px;
+		}
+
+		.subtask-estimate {
+			font-size: 16px;
+			border: 1px solid black;
+			margin-left: 5px;
+		}
+
+		.subtask-delete {
+			font-size: 16px;
+			background-color: grey;
+			border-color: grey;
+			color: white;
+			margin-left: 5px;
+			border-radius: 5px;
+			transition-duration: 0.2s;
+			border-width: 2px;
+		}
+
+		.subtask-delete:hover {
+			border-color: grey;
+			color: black;
+			background-color: white;
+			cursor: pointer;
+		}
+
+		.subtask-clone {
+			font-size: 16px;
+			background-color: grey;
+			border-color: grey;
+			color: white;
+			margin-left: 5px;
+			border-radius: 5px;
+			transition-duration: 0.2s;
+			border-width: 2px;
+		}
+
+		.subtask-clone:hover {
+			border-color: grey;
+			color: black;
+			background-color: white;
+			cursor: pointer;
+		}
+
+		.assignees {
+			font-size: 16px;
+			border: 1px solid black;
+		}
+	</style>
+</head>
+<body>
+	<h1>[@jamezillasaurus] - Super Awesome Jira Subtask Formatter</h1>
+	<h2>Assignees</h2>
+	<textarea rows="14" class="assignees"></textarea>
+	<h2>Subtasks</h2>
+	<div class="subtasks">
+	</div>
+	<div class="actions">
+		<button class="action-button" onclick="addSubtask()">Add Subtask</button>
+		<button class="action-button" onclick="printJira()">Print Jira</button>
+	</div>
+	<pre class="jira-output"></pre>
+	<script>
+		const subtasksDom = document.getElementsByClassName('subtasks')[0];
+		const jiraOutputDom = document.getElementsByClassName('jira-output')[0];
+		const assigneesDom = document.getElementsByClassName('assignees')[0];
+
+		const subtasks = [];
+		let assignees = ['jgerard', 'jdagnall', 'lwjgao', 'lyuanlai', 'lmurphey', 'miliofotou', 'pdalal', 'rhu', 'ssuryadevara', 'sbagga', 'tramamurthy', 'vshah'];
+
+		assigneesDom.innerHTML = assignees.join('\n');
+		assigneesDom.oninput = (e) => {assignees = e.target.value.trim().split('\n')}
+
+		function addSubtask(title = '', assignee = '', estimate = '') {
+			const subtask = {
+				title: title,
+				assignee: assignee,
+				estimate: estimate,
+			};
+
+			const subtaskElement = document.createElement('div');
+			subtaskElement.className = 'subtask'
+
+			const subtaskTitle = document.createElement('input');
+			subtaskTitle.type = 'text';
+			subtaskTitle.placeholder = 'title';
+			subtaskTitle.value = title;
+			subtaskTitle.className = 'subtask-title';
+			subtaskTitle.oninput = (e) => {subtask.title = e.target.value};
+
+			const subtaskAssignee = document.createElement('select');
+			subtaskAssignee.innerHTML = assignees.map(a => `<option value="${a}">${a}</option>`).join('');
+			subtaskAssignee.value = assignee;
+			subtaskAssignee.className = 'subtask-assignee';
+			subtaskAssignee.oninput = (e) => {subtask.assignee = e.target.value};
+
+			const subtaskEstimate = document.createElement('input');
+			subtaskEstimate.type = 'number';
+			subtaskEstimate.placeholder = 'estimate';
+			subtaskEstimate.value = estimate;
+			subtaskEstimate.className = 'subtask-estimate';
+			subtaskEstimate.oninput = (e) => {subtask.estimate = e.target.value};
+
+			const subtaskDelete = document.createElement('button');
+			subtaskDelete.innerHTML = 'x';
+			subtaskDelete.className = 'subtask-delete';
+			subtaskDelete.onclick = (e) => {subtasks.splice(subtasks.indexOf(subtask), 1);subtaskElement.remove()}
+
+			const subtaskClone = document.createElement('button');
+			subtaskClone.innerHTML = 'clone';
+			subtaskClone.className = 'subtask-clone';
+			subtaskClone.onclick = (e) => {addSubtask(subtask.title, subtask.assignee, subtask.estimate)}
+
+
+			subtaskElement.append(subtaskTitle, subtaskAssignee, subtaskEstimate, subtaskDelete, subtaskClone);
+
+			subtasksDom.append(subtaskElement);
+			subtasks.push(subtask);
+		}
+
+		function printJira() {
+			let jiraString;
+			if (subtasks.length == 0) {
+				jiraString = 'No subtasks'
+			} else {
+				jiraString = subtasks.map(s => `- ${s.title.trim()} / assignee:"${s.assignee.trim()}" / estimate:"${s.estimate.trim()}h"`).join('\n');
+			}
+			jiraOutputDom.innerHTML = jiraString;
+		}
+
+		addSubtask();
+	</script>
+</body>
+</html>
