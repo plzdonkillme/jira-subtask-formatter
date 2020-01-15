@@ -131,7 +131,7 @@
 </head>
 <body>
 	<h1>[@jamezillasaurus] - Super Awesome Jira Subtask Formatter</h1>
-	<h2>Assignees [ <button class="assignees-preset" onclick="setAssignees(PRESETS[0])">Preset 1</button> | <button class="assignees-preset" onclick="setAssignees(PRESETS[1])">Preset 2</button> | <button class="assignees-preset" onclick="setAssignees(PRESETS[2])">Preset 3</button> ]</h2>
+	<h2>Assignees [ <button class="assignees-preset" onclick="setAssignees(PRESETS[0])">Preset 1</button> ]</h2>
 	<textarea rows="14" class="assignees" placeholder="Add JIRA assignees, one per line"></textarea>
 	<h2>Subtasks</h2>
 	<div class="subtasks">
@@ -148,19 +148,18 @@
 		const $ASSIGNEES = document.getElementsByClassName('assignees')[0];
 		const $EASTEREGG = document.getElementsByClassName('easter-egg')[0];
 		$ASSIGNEES.oninput = (e) => {setAssignees(e.target.value.split('\n'))}
+		const DEFAULT_OPTION = '<option value="" disabled selected>assignee</option>';
 
 		const SUBTASKS = [];
 		const PRESETS = [
-			['jgerard', 'jdagnall', 'lwjgao', 'lyuanlai', 'lmurphey', 'miliofotou', 'pdalal', 'rhu', 'ssuryadevara', 'sbagga', 'tramamurthy', 'vshah'],
-			['dliu', 'ccheung', 'jszeto', 'cchen', 'dhazekamp', 'achennupati', 'ebond'],
-			['astanton', 'kkolli', 'dleung', 'bneldon', 'vrangarajan', 'bkarumuri'],
+			['jgerard', 'jdagnall', 'lyuanlai', 'lmurphey', 'mdang', 'miliofotou', 'rfirpo', 'rhu', 'ssuryadevara', 'sbagga', 'tramamurthy', 'vishweshkumarp'],
 		];
 		let ASSIGNEES = [];
 
 		function setAssignees(a) {
 			ASSIGNEES = a.filter(as => as.trim().length > 0);
 			$ASSIGNEES.value = a.join('\n');
-			const options = ASSIGNEES.map(as => `<option value="${as}">${as}</option>`).join('');
+			const options = DEFAULT_OPTION + ASSIGNEES.map(as => `<option value="${as}">${as}</option>`).join('');
 			const selects = document.getElementsByTagName('select');
 			for (let i = 0; i < selects.length; i++) {
 				const prevValue = selects[i].value;
@@ -192,14 +191,14 @@
 			subtaskTitle.oninput = (e) => {subtask.title = e.target.value};
 
 			const subtaskAssignee = document.createElement('select');
-			subtaskAssignee.innerHTML = ASSIGNEES.map(a => `<option value="${a}">${a}</option>`).join('');
+			subtaskAssignee.innerHTML = DEFAULT_OPTION + ASSIGNEES.map(a => `<option value="${a}">${a}</option>`).join('');
 			subtaskAssignee.value = assignee;
 			subtaskAssignee.className = 'subtask-assignee';
 			subtaskAssignee.oninput = (e) => {subtask.assignee = e.target.value};
 
 			const subtaskEstimate = document.createElement('input');
 			subtaskEstimate.type = 'number';
-			subtaskEstimate.placeholder = 'estimate';
+			subtaskEstimate.placeholder = 'estimate (hours)';
 			subtaskEstimate.value = estimate;
 			subtaskEstimate.className = 'subtask-estimate';
 			subtaskEstimate.oninput = (e) => {subtask.estimate = e.target.value};
@@ -228,7 +227,7 @@
 			if (SUBTASKS.length == 0) {
 				jiraString = 'No subtasks'
 			} else {
-				jiraString = SUBTASKS.map(s => `- ${s.title.trim()} / assignee:"${s.assignee.trim()}" / estimate:"${s.estimate.trim()}h"`).join('\n');
+				jiraString = SUBTASKS.map(s => `- ${s.title.replace(/\//g, '').trim()} / assignee:"${s.assignee.trim()}" / estimate:"${s.estimate.trim()}h"`).join('\n');
 			}
 			$JIRAOUTPUT.innerHTML = jiraString;
 		}
