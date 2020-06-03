@@ -131,7 +131,7 @@
 </head>
 <body>
 	<h1>[@jamezillasaurus] - Super Awesome Jira Subtask Formatter</h1>
-	<h2>Assignees [ <button class="assignees-preset" onclick="setAssignees(PRESETS[0])">Preset 1</button> ]</h2>
+	<h2>Assignees [ <button class="assignees-preset" onclick="setAssignees(PRESETS[0])">Preset 1</button> | <button class="assignees-preset" onclick="setAssignees(PRESETS[1])">Preset 2</button> ]</h2>
 	<textarea rows="14" class="assignees" placeholder="Add JIRA assignees, one per line"></textarea>
 	<h2>Subtasks</h2>
 	<div class="subtasks">
@@ -152,7 +152,8 @@
 
 		const SUBTASKS = [];
 		const PRESETS = [
-			['jgerard', 'jdagnall', 'lyuanlai', 'lmurphey', 'mdang', 'miliofotou', 'rfirpo', 'rhu', 'ssuryadevara', 'sbagga', 'tramamurthy', 'vishweshkumarp'],
+			['ejordan','jgerard', 'miliofotou', 'mparikh', 'rfirpo', 'rhu', 'rmeyer','ssuryadevara', 'sbagga'],
+			['jdagnall', 'ksankaran', 'lyuanlai', 'lmurphey', 'mfollegot', 'miliofotou', 'ssuryadevara', 'tramamurthy', 'vishweshkumarp'],
 		];
 		let ASSIGNEES = [];
 
