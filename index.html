@@ -131,7 +131,7 @@
 </head>
 <body>
 	<h1>[@jamezillasaurus] - Super Awesome Jira Subtask Formatter</h1>
-	<h2>Assignees [ <button class="assignees-preset" onclick="setAssignees(PRESETS[0])">All</button> | <button class="assignees-preset" onclick="setAssignees(PRESETS[1])">Cygnus</button> | <button class="assignees-preset" onclick="setAssignees(PRESETS[2])">Aquila</button> ]</h2>
+	<h2>Assignees [ <button class="assignees-preset" onclick="setAssignees(PRESETS[0])">All</button> | <button class="assignees-preset" onclick="setAssignees(PRESETS[1])">Orion</button> | <button class="assignees-preset" onclick="setAssignees(PRESETS[2])">Aquila</button> ] | <button class="assignees-preset" onclick="setAssignees(PRESETS[3])">Cygnus</button> ]</h2>
 	<textarea rows="14" class="assignees" placeholder="Add JIRA assignees, one per line"></textarea>
 	<h2>Subtasks</h2>
 	<div class="subtasks">
@@ -153,9 +153,10 @@
 
 		const SUBTASKS = [];
 		const PRESETS = [
-		    ['aaslanyan', 'bneldon', 'cchen', 'ejordan', 'fpan', 'jdagnall', 'jgerard', 'kpetkar', 'ksankaran', 'lyuanlai', 'lmurphey', 'mfollegot', 'miliofotou', 'mparikh', 'prakshatkumars','rhu', 'rtprakash', 'ssuryadevara', 'sbagga', 'tramamurthy', 'vishweshkumarp'],
-			['bneldon', 'cchen', 'ejordan', 'jgerard', 'kpetkar', 'lmurphey', 'mfollegot', 'miliofotou', 'mparikh', 'prakshatkumars', 'rhu', 'sbagga'],
-			['aaslanyan', 'fpan', 'jdagnall', 'ksankaran', 'lyuanlai', 'miliofotou', 'rtprakash', 'ssuryadevara', 'tramamurthy', 'vishweshkumarp'],
+		    ['aaslanyan', 'awei', 'bneldon', 'cchen', 'dreiter', 'ejordan', 'fpan', 'jdagnall', 'jgerard', 'kjahangeer', 'ksankaran', 'lmurphey', 'lyuanlai', 'meghas', 'miliofotou', 'mparikh', 'prakshatkumars', 'rhu', 'rtprakash', 'sbagga', 'ssuryadevara', 'tdsilva', 'tramamurthy', 'vishweshkumarp', 'williaml'],
+			['bneldon', 'cchen', 'dreiter', 'ejordan', 'meghas', 'mparikh', 'rhu', 'sbagga'],
+			['aaslanyan', 'fpan', 'jdagnall', 'rtprakash', 'ssuryadevara', 'tdsilva', 'vishweshkumarp'],
+			['jgerard', 'kjahangeer', 'ksankaran', 'lmurphey', 'lyuanlai', 'prakshatkumars', 'tramamurthy', 'williaml'],
 		];
 		let ASSIGNEES = [];
 
